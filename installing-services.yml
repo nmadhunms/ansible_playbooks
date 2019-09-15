@@ -1,0 +1,13 @@
+# installing-services.yml
+---
+- hosts: webservers
+  become: true
+  tasks:
+    - name: ensure a list of packages installed
+      yum:
+        name: 
+        - httpd
+        - php
+        state: present
+    - name: Ensure apache starts
+      service: name=httpd state=started enabled=yes
