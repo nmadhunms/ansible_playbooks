@@ -4,17 +4,28 @@
   become: true
   vars:
    path_to_app: "/var/www/html"
+  vars_files:
+   - ../vars/secret-variables.yml
+  vars_prompt:
+   - name: "upload_var"
+     prompt: "Upload index.php file?"
+   - name: "create_var"
+     prompt: "Create info.php page?" 
   tasks:
+   - name: Use secret passoword here
+     debug:
+       msg: "{{ secret_password }}"
    - name: Upload application file
      copy:
       src: ../index.php
       dest: "{{ path_to_app }}"
       mode: 0755
+     when: upload_var == 'yes'
    - name: Create simple info page
      copy: 
       dest: "{{ path_to_app }}/info.php"
       content: "</h1> Info about webserver: {{ ansible_hostname }} </h1>"
-
+     when: create_var == 'yes'  
    - name: See directory contents
      command: ls -la {{ path_to_app }}
      register: dir_contents
