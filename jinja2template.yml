@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+   - name: Jinja2 template
+     template:
+      src: ../template.j2
+      dest: "/tmp/{{ ansible_nodename }}_template.out"
+      trim_blocks: true

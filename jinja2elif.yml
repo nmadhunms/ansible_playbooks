@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+   - name: Jinja2 if elif
+     debug:
+      msg: > 
+           {% if ansible_nodename == "ansible.client1" -%}
+              This is app1
+           {% elif ansible_nodename == "ansible.client2" -%}
+              This is app2
+           {% else -%}
+              {{ ansible_nodename }}
+           {% endif %}
