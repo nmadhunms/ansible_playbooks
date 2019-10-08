@@ -1,0 +1,11 @@
+---
+- hosts: control
+  tasks:
+   - name: Add app1 to adhoc_group
+     add_host:
+      name: app1
+      groups: adhoc_group
+- hosts: adhoc_group
+  tasks:
+   - name: Ping all in adhoc_group
+     ping:
