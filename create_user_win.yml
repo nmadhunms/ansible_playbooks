@@ -1,0 +1,12 @@
+---
+- hosts: win
+  tasks:
+   - name: Create user
+     win_user:
+      name: "{{ item }}"
+      state: present
+      groups: Users  
+     with_items:
+      - Kahan
+      - Dev
+
