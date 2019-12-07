@@ -1,6 +1,7 @@
 # uname.yml
 ---
 - hosts: webservers
+  serial: 1
   tasks:
   - name: Get OS type
     shell: uname
