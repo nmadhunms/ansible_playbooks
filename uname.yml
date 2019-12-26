@@ -1,6 +1,6 @@
 # uname.yml
 ---
-- hosts: webservers
+- hosts: "{{ hostname }}"
   serial: 1
   tasks:
   - name: Get OS type

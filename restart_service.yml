@@ -1,0 +1,17 @@
+---
+- hosts: win
+  gather_facts: false
+  tasks:
+  - name: Stop service
+    win_service:
+      name: spooler
+      state: stopped
+  - name: Rename Folder
+    win_shell: Rename-Item C:\Users\test.txt C:\Users\test1.txt
+    register: command_register
+    ignore_errors: True
+  - name: Start service
+    win_service:
+      name: spooler
+      state: started
+    when: "'FAILED' in command_register.stderr"
