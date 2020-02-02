@@ -6,12 +6,13 @@
     win_service:
       name: spooler
       state: stopped
+    register: service_stopped
   - name: Rename Folder
-    win_shell: Rename-Item C:\Users\test.txt C:\Users\test1.txt
-    register: command_register
-    ignore_errors: True
+    win_shell: Rename-Item C:\Users\test.txt test1.txt
+    when: service_stopped.changed
+    register: folder_renamed
   - name: Start service
     win_service:
       name: spooler
       state: started
-    when: "'FAILED' in command_register.stderr"
+    when: folder_renamed.changed
