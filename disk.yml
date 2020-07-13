@@ -1,0 +1,17 @@
+---
+- hosts: app1
+  become: true
+  #gather_facts: true
+  tasks:
+  - shell: df -h "{{ item }}" | tail -n 1 | awk {'print $5 '} | sed 's/%//g'
+    with_items:
+    - /
+    - /boot
+    - /run
+    register: used_size
+  - name: set Fact
+    set_fact:
+      disk_check: "{{ used_size.results|map(attribute='stdout')|list }}"
+  - debug:
+      var: "{{ disk_check|map('int')|sum(start=0) }}"  
+ # msg: "{{ test.results|map(attribute='stdout')|list }}"
