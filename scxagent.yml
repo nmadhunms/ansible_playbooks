@@ -3,7 +3,8 @@
   gather_facts: yes
   become: true
   roles:
-      - /home/nms/ansible/roles/installscxagent
+     # - /home/nms/ansible/roles/installscxagent
       - /home/nms/ansible/roles/checkscxstatus
+      - /home/nms/ansible/roles/certscxagent
 
 

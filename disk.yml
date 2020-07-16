@@ -9,6 +9,7 @@
     - /boot
     - /run
     register: used_size
+ 
   - name: set Fact
     set_fact:
       disk_check: "{{ used_size.results|map(attribute='stdout')|list }}"
