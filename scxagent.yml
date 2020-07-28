@@ -1,15 +1,15 @@
 ---
 - hosts: app1
-  gather_facts: false
+#  gather_facts: false
   become: true
-  vars_prompt:
-    - name: check_cert
-      prompt: "what is path?"
+#  vars_prompt:
+#    - name: check_cert
+#      prompt: "what is path?"
   roles:
       - /home/nms/ansible/roles/installscxagent
       - /home/nms/ansible/roles/checkscxstatus
-      - /home/nms/ansible/roles/certscxagent
-  
+#      - /home/nms/ansible/roles/certscxagent
+#      - /home/nms/ansible/roles/uninstallscxagent
 
 
 
