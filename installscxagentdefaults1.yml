@@ -1,0 +1,8 @@
+---
+# defaults file for installscxagent
+scx_agent_path: '/opt/microsoft/scx/bin/tools'
+scx_agent_RedHat: /home/svcscompr/ansible/scx_agents/RedHat/scx-1.5.1-242.rhel.7.x64.rpm
+scx_agent_Ubuntu: /home/svcscompr/ansible/scx_agents/Ubuntu/scx-1.5.1-256.universald.1.x64.deb
+scx_installer_CentOS: /tmp/scx-1.5.1-242.rhel.7.x64.rpm
+scx_installer_Ubuntu: /tmp/scx-1.5.1-256.universald.1.x64.deb
+

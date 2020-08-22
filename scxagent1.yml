@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+  vars_prompt:
+    - name: domain_name
+      prompt: "Enter domain?"
+      private: no
+  roles:
+      - installscxagent
+      - checkscxagent
+      - certscxagent
+

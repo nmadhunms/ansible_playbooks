@@ -8,7 +8,7 @@
   roles:
       - /home/nms/ansible/roles/installscxagent
       - /home/nms/ansible/roles/checkscxstatus
-#      - /home/nms/ansible/roles/certscxagent
+      - /home/nms/ansible/roles/certscxagent
 #      - /home/nms/ansible/roles/uninstallscxagent
 
 

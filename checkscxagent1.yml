@@ -1,0 +1,16 @@
+---
+# tasks file for checkscxagent
+- name: Check scx status
+  systemd:
+    name: scx-cimd
+    state: restarted
+    no_block: yes
+  register: omid_status
+  changed_when: false
+- debug:
+    msg: >
+         {% if omid_status.status.SubState == "running" -%}
+            scxagent was {{ omid_status.status.SubState }} and is re{{ omid_status.state }}
+         {% else -%}
+            scxagent was {{ omid_status.status.SubState }} and started
+         {% endif %}

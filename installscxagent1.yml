@@ -1,0 +1,51 @@
+---
+# tasks file for installscxagent
+- name: Check whether scx agent is already installed
+  stat:
+    path: "{{ scx_agent_path }}"
+  register: scx_agent_installed
+  tags: uninstall_scx
+
+- name: Copy scx agent for RedHat
+  copy:
+    src: "{{ scx_agent_RedHat }}"
+    dest: /tmp/
+    mode: 0755
+  when: ( not scx_agent_installed.stat.exists and ansible_distribution == "RedHat" )
+  register: scx_agent_filepath_RedHat
+
+- name: Copy scx agent for Ubuntu
+  copy:
+    src: "{{ scx_agent_Ubuntu }}"
+    dest: /tmp/
+    mode: 0755
+  when: ( not scx_agent_installed.stat.exists and ansible_distribution == "Ubuntu" )
+  register: scx_agent_filepath_Ubuntu
+
+- name: Install scx agent on RedHat Distros
+  yum:
+    name: "{{ scx_agent_filepath_RedHat.dest }}"
+    state: present
+  when: ( not scx_agent_installed.stat.exists and ansible_distribution == "RedHat" )
+
+- name: Install scx agent on Ubuntu Distros
+  apt:
+    name: "{{ scx_agent_filepath_Ubuntu.dest }}"
+    state: present
+  when: ( not scx_agent_installed.stat.exists and ansible_distribution == "Ubuntu" )
+
+- name: Remove scx agent installer
+  file:
+    path: "{{ item }}"
+    state: absent
+#  when: ( scx_agent_filepath_RedHat.changed or scx_agent_filepath_Ubuntu.changed )
+  with_items:
+     - "{{ scx_installer_CentOS }}"
+     - "{{ scx_installer_Ubuntu }}"
+
+- name: Uninstall scx agent
+  yum:
+    name: scx
+    state: absent
+  when: scx_agent_installed.stat.exists
+  tags: [ never, uninstall_scx ]

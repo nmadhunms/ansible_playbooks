@@ -1,0 +1,28 @@
+---
+# tasks file for certscxagent
+- name: Check certificate
+  command: openssl x509 -noout -in /etc/opt/microsoft/scx/ssl/scx.pem -subject -issuer -dates
+  register: check_cert
+  changed_when: false
+
+- debug:
+    var: check_cert.stdout_lines
+
+- name: Create certificate
+  shell:
+     cmd: openssl x509 -noout -in /etc/opt/microsoft/scx/ssl/scx.pem -subject -issuer -dates | sed -n '1p' | sed -n '/[newsint|org]$/! e /opt/microsoft/scx/bin/tools/scxsslconfig -f -h "{{ ansible_hostname }}" -d "{{ domain_name }}"'
+  register: cre_cert
+  changed_when: false
+
+- debug:
+    var: cre_cert.stdout_lines
+  when: cre_cert.stdout!= ''
+
+- name: Recreate certificate
+  command: /opt/microsoft/scx/bin/tools/scxsslconfig –f –h “{{ ansible_hostname }}” –d “{{ domain_name }}”
+  register: recre_cert
+  tags: [ never, recreate_cert ]
+- debug:
+    var: recre_cert.stdout_lines
+  tags: [ never, recreate_cert ]
+
