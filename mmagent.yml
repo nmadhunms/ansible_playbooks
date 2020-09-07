@@ -1,0 +1,15 @@
+---
+- hosts: win
+  gather_facts: yes
+#  become: true
+#  vars_prompt:
+#    - name: domain_name
+#      prompt: "Enter domain?"
+#      private: no
+#  vars:
+#     CD: Get-Date -UFormat "%A %m/%d/%Y %R %Z"
+  roles:
+#      - /home/nms/ansible/roles/installmmagent
+      - /home/nms/ansible/roles/checkmmastatus
+#      - certscxagent
+
