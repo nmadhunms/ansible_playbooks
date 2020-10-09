@@ -1,6 +1,6 @@
 # installing-services.yml
 ---
-- hosts: webservers
+- hosts: aws
   become: true
   tasks:
     - name: ensure a list of packages installed

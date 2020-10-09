@@ -1,0 +1,11 @@
+- hosts: aws
+  become: true
+  roles:
+    - name: newrelic.newrelic-infra
+      vars:
+        nrinfragent_os_name: el
+        nrinfragent_os_version: 8
+        nrinfragent_config:
+          license_key: eu01xxe7aa21002964e542a733e09a4c9ab5NRAL
+          log_file: /var/log/newrelic/nr-infra.log
+          log_to_stdout: false
