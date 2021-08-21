@@ -18,16 +18,28 @@
     when: file_cp.changed
 - hosts: localhost
   tasks:
+  - name: find copied files in dest
+    find:
+      paths: /home/nms/ansible/test
+      file_type: file
+    register: result
+#    delegate_to: localhost
+  - debug: var=item.path
+    with_items: "{{ result.files }}"  
   - name: Send emails with files
     mail:
      host: smtp.gmail.com
      port: 587
-     username: 
+     username:  
      password: 
      to: 
-     subject: XML Inventory from "{{ item | basename }}"
-     body: XML Inventory from "{{ item | basename }}"
+     subject: XML Inventory from "{{ item.path | basename }}" 
+     body: XML Inventory from "{{ item.path | basename }}"
      attach:
-       - "{{ item }}"
-    with_fileglob:
-       - "/home/nms/ansible/test/*"
+       - "{{ item.path }}"
+    with_items: "{{ result.files }}"
+ #   delegate_to: localhost
+
+ # - name: send email
+ #   shell: 
+ #         -"/home/nms/ansible/test/mail.sh"
