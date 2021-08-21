@@ -1,0 +1,22 @@
+- hosts: all
+#  become: yes
+#  become_user: nms
+  gather_facts: true
+  vars:
+    src_path: "/home/nms/test.txt"
+    dest_path: "/home/nms/ansible/test"
+  tasks:
+  - name: copy from servers to jmp host
+    synchronize:
+      src: "{{ src_path }}"
+      dest: "{{ dest_path }}"
+#      delete: yes
+#      recursive: yes
+#      owner: yes
+      mode: pull
+    
+ #     mode: pull
+ #     compress: yes
+ #     times: yes
+ #     rsync_timeout: 15
+      

@@ -1,0 +1,16 @@
+- hosts: localhost
+  tasks:
+  - name: Send emails with files
+    mail:
+     host: smtp.gmail.com
+     port: 587
+     username: nmadhunms@gmail.com
+     password: nnmadhus17nms
+     to: nmadhunms@gmail.com
+     subject: XML Inventory from "{{ item | basename }}"
+     body: XML Inventory from "{{ item | basename }}"
+     attach:
+       - "{{ item }}"
+    with_fileglob: 
+       - "/home/nms/ansible/test/*"
+

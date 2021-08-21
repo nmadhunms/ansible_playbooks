@@ -1,0 +1,22 @@
+- hosts: localhost
+  tasks:
+  - name: find copied files in dest
+    find:
+      paths: /home/nms/ansible/test
+      file_type: file
+    register: result
+  - debug: var=item.path
+    with_items: "{{ result.files }}"
+  - name: Send emails with files
+    mail:
+     host: smtp.gmail.com
+     port: 587
+     username: nmadhunms@gmail.com
+     password: nnmadhus17nms
+     to: nmadhunms@gmail.com
+     subject: XML Inventory from "{{ item.path | basename }}"
+     body: XML Inventory from "{{ item.path | basename }}"
+     attach:
+       - "{{ item.path }}"
+    with_items: "{{ result.files }}"
+
